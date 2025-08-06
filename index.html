@@ -1,1 +1,535 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Apayku Medios</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .title {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2d3436;
+            margin-bottom: 25px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .platform-section {
+            margin-bottom: 20px;
+        }
+
+        .section-label {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #2d3436;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .platforms-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .platform-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px 10px;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .platform-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .platform-btn.active {
+            border-color: #6c5ce7;
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            color: white;
+        }
+
+        .platform-icon {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        .youtube { background: #FF0000; color: white; }
+        .tiktok { background: #000000; color: white; }
+        .instagram { background: #E4405F; color: white; }
+        .facebook { background: #1877F2; color: white; }
+
+        .platform-name {
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-with-button {
+            display: flex;
+            gap: 8px;
+            align-items: stretch;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #6c5ce7;
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+        }
+
+        .paste-btn, .browse-btn {
+            padding: 12px 15px;
+            background: #fd79a8;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .browse-btn {
+            background: #6c5ce7;
+        }
+
+        .paste-btn:hover {
+            background: #e84393;
+            transform: translateY(-1px);
+        }
+
+        .browse-btn:hover {
+            background: #5f3dc4;
+            transform: translateY(-1px);
+        }
+
+        .options-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .progress-section {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #f1f2f6;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 10px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00b894, #00cec9);
+            width: 0%;
+            transition: width 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+        }
+
+        .progress-cat {
+            position: absolute;
+            right: -15px;
+            font-size: 1.2rem;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        .progress-text {
+            font-size: 0.9rem;
+            color: #636e72;
+            font-weight: 500;
+        }
+
+        .buttons-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .download-btn, .clear-btn {
+            padding: 15px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            color: white;
+            box-shadow: 0 6px 20px rgba(0, 184, 148, 0.3);
+        }
+
+        .download-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 184, 148, 0.4);
+        }
+
+        .download-btn:disabled {
+            background: #636e72;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .clear-btn {
+            background: linear-gradient(135deg, #fd79a8, #e84393);
+            color: white;
+            box-shadow: 0 6px 20px rgba(253, 121, 168, 0.3);
+        }
+
+        .clear-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(253, 121, 168, 0.4);
+        }
+
+        .status-message {
+            background: rgba(108, 92, 231, 0.1);
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            border-radius: 10px;
+            padding: 10px 15px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #5f3dc4;
+            text-align: center;
+        }
+
+        .error-message {
+            background: rgba(231, 76, 60, 0.1);
+            border-color: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+        }
+
+        .success-message {
+            background: rgba(0, 184, 148, 0.1);
+            border-color: rgba(0, 184, 148, 0.2);
+            color: #00b894;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fdcb6e, #e17055);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px;
+                padding: 20px;
+            }
+            
+            .platforms-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .options-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .buttons-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">🚀 Apayku Medios</h1>
+        
+        <div class="platform-section">
+            <label class="section-label">Selecciona la plataforma:</label>
+            <div class="platforms-grid">
+                <div class="platform-btn active" data-platform="youtube">
+                    <div class="platform-icon youtube">▶</div>
+                    <span class="platform-name">YouTube</span>
+                </div>
+                <div class="platform-btn" data-platform="tiktok">
+                    <div class="platform-icon tiktok">♪</div>
+                    <span class="platform-name">TikTok</span>
+                </div>
+                <div class="platform-btn" data-platform="instagram">
+                    <div class="platform-icon instagram">📷</div>
+                    <span class="platform-name">Instagram</span>
+                </div>
+                <div class="platform-btn" data-platform="facebook">
+                    <div class="platform-icon facebook">f</div>
+                    <span class="platform-name">Facebook</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label class="section-label">URL del video:</label>
+            <div class="input-with-button">
+                <input type="text" id="url-input" placeholder="Pega aquí la URL del video...">
+                <button class="paste-btn" onclick="pasteFromClipboard()">📋 Pegar</button>
+            </div>
+        </div>
+
+        <div class="options-row">
+            <div class="input-group">
+                <label class="section-label">Formato:</label>
+                <select id="format-select">
+                    <option value="mp3">🎵 Audio MP3</option>
+                    <option value="1080p" selected>🎬 Video 1080p</option>
+                    <option value="720p">🎬 Video 720p</option>
+                    <option value="480p">🎬 Video 480p</option>
+                    <option value="best">⭐ Mejor calidad</option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label class="section-label">Carpeta:</label>
+                <div class="input-with-button">
+                    <input type="text" id="folder-input" value="Downloads" readonly>
+                    <button class="browse-btn" onclick="selectFolder()">📁</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-section">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill">
+                    <span class="progress-cat">🐱</span>
+                </div>
+            </div>
+            <div class="progress-text" id="progress-text">Listo para descargar</div>
+        </div>
+
+        <div class="buttons-row">
+            <button class="download-btn" id="download-btn" onclick="startDownload()">
+                🚀 DESCARGAR
+            </button>
+            <button class="clear-btn" onclick="clearFields()">
+                🗑️ LIMPIAR
+            </button>
+        </div>
+
+        <div id="status-message" class="status-message" style="display: none;"></div>
+
+        <div class="warning-box">
+            ⚠️ <strong>Nota importante:</strong> Esta es una demostración visual del descargador. Para funcionalidad real, necesitarás implementar un backend con yt-dlp o usar servicios como YouTube-DL API.
+        </div>
+    </div>
+
+    <script>
+        let selectedPlatform = 'youtube';
+        let isDownloading = false;
+
+        // Selección de plataforma
+        document.querySelectorAll('.platform-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.platform-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                selectedPlatform = this.dataset.platform;
+                showStatus(`${this.querySelector('.platform-name').textContent} seleccionado`, 'info');
+            });
+        });
+
+        // Pegar desde portapapeles
+        async function pasteFromClipboard() {
+            try {
+                const text = await navigator.clipboard.readText();
+                document.getElementById('url-input').value = text;
+                showStatus('URL pegada desde el portapapeles', 'success');
+            } catch (err) {
+                showStatus('Error al pegar: ' + err.message, 'error');
+            }
+        }
+
+        // Seleccionar carpeta (simulado)
+        function selectFolder() {
+            // En una aplicación real, esto abriría un selector de carpeta
+            const folders = ['Downloads', 'Videos', 'Music', 'Desktop', 'Documents'];
+            const randomFolder = folders[Math.floor(Math.random() * folders.length)];
+            document.getElementById('folder-input').value = randomFolder;
+            showStatus(`Carpeta seleccionada: ${randomFolder}`, 'info');
+        }
+
+        // Limpiar campos
+        function clearFields() {
+            document.getElementById('url-input').value = '';
+            updateProgress(0, 'Campos limpiados');
+            hideStatus();
+        }
+
+        // Mostrar estado
+        function showStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('status-message');
+            statusDiv.textContent = message;
+            statusDiv.className = 'status-message';
+            if (type === 'error') statusDiv.classList.add('error-message');
+            if (type === 'success') statusDiv.classList.add('success-message');
+            statusDiv.style.display = 'block';
+        }
+
+        function hideStatus() {
+            document.getElementById('status-message').style.display = 'none';
+        }
+
+        // Actualizar progreso
+        function updateProgress(percent, message) {
+            const progressFill = document.getElementById('progress-fill');
+            const progressText = document.getElementById('progress-text');
+            
+            progressFill.style.width = percent + '%';
+            progressText.textContent = message;
+
+            // Animar el gato
+            const cat = progressFill.querySelector('.progress-cat');
+            if (percent > 0) {
+                cat.textContent = Math.random() > 0.5 ? '🐈' : '🐱';
+            } else {
+                cat.textContent = '🐱';
+            }
+        }
+
+        // Simular descarga
+        function startDownload() {
+            const url = document.getElementById('url-input').value.trim();
+            if (!url) {
+                showStatus('Por favor, ingresa una URL válida', 'error');
+                return;
+            }
+
+            if (isDownloading) {
+                showStatus('Ya hay una descarga en progreso', 'error');
+                return;
+            }
+
+            isDownloading = true;
+            const downloadBtn = document.getElementById('download-btn');
+            downloadBtn.disabled = true;
+            downloadBtn.textContent = '⏳ DESCARGANDO...';
+
+            // Simular proceso de descarga
+            let progress = 0;
+            const platform = selectedPlatform.charAt(0).toUpperCase() + selectedPlatform.slice(1);
+            const format = document.getElementById('format-select').selectedOptions[0].text;
+
+            const downloadInterval = setInterval(() => {
+                progress += Math.random() * 15 + 5;
+                
+                if (progress >= 100) {
+                    progress = 100;
+                    updateProgress(100, '🎉 ¡Descarga completada!');
+                    showStatus(`¡Éxito! Video descargado de ${platform} en formato ${format}`, 'success');
+                    
+                    setTimeout(() => {
+                        isDownloading = false;
+                        downloadBtn.disabled = false;
+                        downloadBtn.textContent = '🚀 DESCARGAR';
+                        updateProgress(0, 'Listo para nueva descarga');
+                    }, 3000);
+                    
+                    clearInterval(downloadInterval);
+                } else {
+                    const speed = (Math.random() * 5 + 1).toFixed(1);
+                    updateProgress(progress, `Descargando ${Math.floor(progress)}% (${speed}MB/s)`);
+                }
+            }, 200);
+
+            // Fases iniciales
+            setTimeout(() => updateProgress(5, `Conectando con ${platform}...`), 100);
+            setTimeout(() => updateProgress(10, 'Analizando video...'), 500);
+        }
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress(0, 'Listo para descargar');
+            
+            // Detectar pegado con Ctrl+V
+            document.getElementById('url-input').addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.key === 'v') {
+                    setTimeout(() => {
+                        showStatus('URL pegada', 'success');
+                    }, 100);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
